@@ -1,0 +1,18 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution{
+    public static int maximumProfit(ArrayList<Integer> prices){
+        // Write your code here.
+        int ans=0;
+        int n=prices.size();
+        int min=prices.get(0);
+        for(int i=1;i<n;i++){
+            int tmp=prices.get(i)-min;
+            if(tmp>ans) ans=tmp;
+            if(min>prices.get(i)) min=prices.get(i);
+        }
+        return ans;
+    }
+}
