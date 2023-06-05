@@ -1,0 +1,34 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long getInversions(long arr[], int n) {
+        // Write your code here.
+        long[] tmp=new long[n];
+        return mergeSort(arr,tmp,0,n-1);
+    }
+    private static long mergeSort(long[] arr, long[] tmp, int low, int high){
+        long ans=0;
+        if(low<high){
+            int mid=low+((high-low)/2);
+            ans+=mergeSort(arr, tmp, low, mid);
+            ans+=mergeSort(arr, tmp, mid+1, high);
+            ans+=merge(arr, tmp, low,mid+1,high);
+        }
+        return ans;
+    }
+    private static long merge(long[] arr, long[] tmp, int low, int mid, int high){
+        long cnt=0;
+        int i=low,j=mid,k=low;
+        while(i<=mid-1 && j<=high){
+            if(arr[i]<=arr[j]) tmp[k++]=arr[i++];
+            else{
+                tmp[k++]=arr[j++];
+                cnt+=(mid-i);
+            }
+        }
+        while(i<=mid-1) tmp[k++]=arr[i++];
+        while(j<=high) tmp[k++]=arr[j++];
+        for(i=low;i<=high;i++) arr[i]=tmp[i];
+        return cnt;
+    }
+}
