@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution 
+{
+	public static int uniqueSubstrings(String input) 
+    {
+		//write your code here
+		Queue<Character> q=new LinkedList<>();
+		int ans=0,cnt=0;
+		for(int i=0;i<input.length();i++){
+			char c=input.charAt(i);
+			if(!q.contains(c)){
+				q.add(c);
+				cnt++;
+			}else{
+				if(ans<cnt) ans=cnt;
+				do{
+					q.poll();
+					cnt--;
+				}while(q.contains(c));
+				i--;
+			}
+		}
+		if(ans<cnt) ans=cnt;
+		return ans;
+	}
+}
