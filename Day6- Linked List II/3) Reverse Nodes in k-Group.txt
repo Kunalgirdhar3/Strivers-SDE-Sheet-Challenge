@@ -1,0 +1,56 @@
+import java.io.*;
+import java.util.* ;
+
+/****************************************************************
+
+    Following is the class structure of the Node class:
+
+        class Node
+        {
+        public:
+	        int data;
+	        Node *next;
+	        Node(int data)
+	        {
+		        this->data = data;
+		        this->next = NULL;
+	        }
+        };
+
+*****************************************************************/
+
+public class Solution {
+	public static Node getListAfterReverseOperation(Node head, int n, int b[]) {
+		// Write your code here.
+		if(head==null || head.next==null) return head;
+		int len=getLength(head);
+		Node dummyHead=new Node(0);
+		dummyHead.next=head;
+		Node prev=dummyHead;
+		Node cur, next;
+		for(int i=0;i<n;i++){
+			if(len==0) break;
+			if(b[i]==0) continue;
+			cur=prev.next;
+			next=cur.next;
+			for(int j=1;j<Math.min(b[i],len);j++){
+				cur.next=next.next;
+				next.next=prev.next;
+				prev.next=next;
+				next=cur.next;
+			}
+			len-=Math.min(b[i],len);
+			prev=cur;
+		}
+		return dummyHead.next;
+	}
+	private static int getLength(Node head){
+		Node tmp=head;
+		int cnt=0;
+		while(tmp!=null){
+			cnt++;
+			tmp=tmp.next;
+		}
+		return cnt;
+	}
+}
