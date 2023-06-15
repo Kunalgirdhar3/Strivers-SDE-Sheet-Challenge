@@ -1,0 +1,46 @@
+import java.util.* ;
+import java.io.*; 
+
+class Meeting{
+    int start;
+    int end;
+    int idx;
+
+    Meeting(int st, int e, int i){
+        start=st;
+        end=e;
+        idx=i;
+    }
+
+}
+class MeetingComp implements Comparator<Meeting>{
+    @Override
+    public int compare(Meeting a, Meeting b){
+        if(a.end<b.end) return -1;
+        else if(a.end>b.end) return 1;
+        else if(a.idx<b.idx) return -1;
+        else return 1;
+    }
+}
+public class Solution {
+    public static List<Integer> maximumMeetings(int[] start, int[] end) {        
+        //Write your code here
+        List<Meeting> m=new ArrayList<>();
+        int n=start.length;
+        for(int i=0;i<n;i++){
+            m.add(new Meeting(start[i],end[i],i+1));
+        }
+        MeetingComp mc=new MeetingComp();
+        Collections.sort(m,mc);
+        List<Integer> ans=new ArrayList<>();
+        ans.add(m.get(0).idx);
+        int lim=m.get(0).end;
+        for(int i=1;i<n;i++){
+            if(m.get(i).start>lim){
+                lim=m.get(i).end;
+                ans.add(m.get(i).idx);
+            }
+        }
+        return ans;
+    }
+}

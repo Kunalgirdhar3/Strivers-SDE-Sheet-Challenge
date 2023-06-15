@@ -1,0 +1,21 @@
+import java.util.*;
+public class Solution {
+    public static int calculateMinPatforms(int at[], int dt[], int n) {
+        // Write your code here.
+        Arrays.sort(at);
+        Arrays.sort(dt);
+        int i=0,j=0;
+        int cur=0,ans=0;
+        while(i<n && j<n){
+            if(at[i]<=dt[j]){
+                cur++;
+                i++;
+            }else{
+                cur--;
+                j++;
+            }
+            ans=Math.max(ans,cur);
+        }
+        return ans;
+    }
+}
