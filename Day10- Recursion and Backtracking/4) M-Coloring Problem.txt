@@ -1,0 +1,28 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+	public static String graphColoring(int[][] mat, int m) {
+		// Write your code here
+		int n=mat.length;
+		return (f(mat,0,new int[n],n,m)?"YES":"NO");
+	}
+	private static boolean f(int[][] mat, int node, int[] color, int n, int m){
+		if(node==n) return true;
+		for(int i=1;i<=m;i++){
+			if(isSafe(mat,node,color,n,i)){
+				color[node]=i;
+				if(f(mat,node+1,color,n,m)) return true;
+				color[node]=0;
+			}
+		}
+		return false;
+	}
+	private static boolean isSafe(int[][] mat, int node, int[] color, int n, int col){
+		for(int i=0;i<n;i++){
+			if(mat[node][i]==1){
+				if(color[i]==col) return false;
+			}
+		}
+		return true;
+	}
+}

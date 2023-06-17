@@ -1,0 +1,47 @@
+import java.util.ArrayList;
+
+public class Solution {
+    public static ArrayList<ArrayList<Integer>> solveNQueens(int n) {
+        // Write your code here.
+        boolean[][] board=new boolean[n][n];
+        ArrayList<ArrayList<Integer>> ans=new ArrayList<>();
+        f(ans,board,0,n);
+        return ans;
+    }
+    private static void f(ArrayList<ArrayList<Integer>> ans, boolean[][] board, int row, int n){
+        if(row==n){
+            ArrayList<Integer> li=new ArrayList<>();
+            for(int r=0;r<n;r++){
+                for(int c=0;c<n;c++){
+                    if(board[r][c]) li.add(1);
+                    else li.add(0);
+                }
+            }
+            ans.add(li);
+            return;
+        }
+
+        for(int col=0;col<n;col++){
+            if(isSafe(board,row,col)){
+                board[row][col]=true;
+                f(ans,board,row+1,n);
+                board[row][col]=false;
+            }
+        }
+    }
+    private static boolean isSafe(boolean[][] board, int r, int c){
+        for(int i=0;i<r;i++){
+            if(board[i][c]) return false;
+        }
+        int maxLeft=Math.min(r,c);
+        for(int i=1;i<=maxLeft;i++){
+            if(board[r-i][c-i]) return false;
+        }
+        int n=board.length;
+        int maxRight=Math.min(r,n-c-1);
+        for(int i=1;i<=maxRight;i++){
+            if(board[r-i][c+i]) return false;
+        }
+        return true;
+    }
+}

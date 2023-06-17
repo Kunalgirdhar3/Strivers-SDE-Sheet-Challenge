@@ -1,0 +1,27 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static List<String> findPermutations(String s) {
+        // Write your code here.
+        List<String> ans=new ArrayList<>();
+        int n=s.length();
+        boolean[] vis=new boolean[n];
+        f(ans,new StringBuilder(),s,n,vis);
+        return ans;
+    }
+    private static void f(List<String> ans, StringBuilder sb, String s, int n, boolean[] vis){
+        if(sb.length()==n){
+            ans.add(new String(sb));
+            return;
+        }
+        for(int i=0;i<n;i++){
+            if(!vis[i]){
+                sb.append(s.charAt(i));
+                vis[i]=true;
+                f(ans,sb,s,n,vis);
+                vis[i]=false;
+                sb.delete(sb.length()-1, sb.length());
+            }
+        }
+    }
+}

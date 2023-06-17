@@ -1,0 +1,29 @@
+import java.util.* ;
+import java.io.*; 
+import java.util.ArrayList;
+
+public class Solution {
+
+	public static ArrayList<String> wordBreak(String s, ArrayList<String> dictionary) {
+		// Write your code here.
+		ArrayList<String> ans=new ArrayList<>();
+		f(s,dictionary,ans,0,"");
+		return ans;
+	}
+	private static void f(String s, ArrayList<String> dict,ArrayList<String> ans, int idx, String cur){
+		if(idx==s.length()){
+			ans.add(cur);
+			return;
+		}
+		for(int i=idx;i<s.length();i++){
+			String suffix=s.substring(idx,i+1);
+			if(dict.contains(suffix)){
+				String tmp=cur;
+				cur+=suffix;
+				if(i!=s.length()-1) cur+=" ";
+				f(s,dict,ans,i+1,cur);
+				cur=tmp;
+			}
+		}
+	}
+}
