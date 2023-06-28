@@ -1,0 +1,21 @@
+public class Solution {
+    public static int ninjaAndLadoos(int row1[], int row2[], int n, int m, int k) {
+        // Write your code here.
+        int i=0,j=0;
+        for(int t=0;t<k-1;t++){
+            if(i>=n){
+                j++;
+                continue;
+            }
+            if(j>=m){
+                i++;
+                continue;
+            }
+            if(row1[i]<row2[j]) i++;
+            else j++;
+        }
+        if(i>=n) return row2[j];
+        if(j>=m) return row1[i];
+        return Math.min(row1[i],row2[j]);
+    }
+}

@@ -1,0 +1,33 @@
+import java.util.* ;
+import java.io.*; 
+public class Solution {
+    public static long ayushGivesNinjatest(int n, int m, int[] time) {
+        // Write your code here.
+        long s=0;
+        long e=0;
+        for(int t:time) e+=t;
+        long ans=-1;
+        while(s<=e){
+            long mid=s+(e-s)/2;
+            if(isPossible(time,n,m,mid)){
+                ans=mid;
+                e=mid-1;
+            }
+            else s=mid+1;
+        }
+        return ans;
+    }
+    private static boolean isPossible(int[] time, int n, int m, long mid){
+        int cnt=1;
+        long sum=0;
+        for(int i=0;i<m;i++){
+            if(sum+time[i]<=mid) sum+=time[i];
+            else{
+                cnt++;
+                if(cnt>n || time[i]>mid) return false;
+                sum=time[i];
+            }
+        }
+        return true;
+    }
+}
