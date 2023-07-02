@@ -1,0 +1,32 @@
+import java.util.*;
+
+public class Solution {
+
+	public static void findMedian(int arr[])  {
+        
+        
+        /* Your class should be named Solution
+		 * Don't write main().
+		 * Don't read input, it is passed as function argument.
+		 * Return output and don't print it.
+	 	 * Taking input and printing output is handled automatically.
+        */
+		int n=arr.length;
+		if(n==0) return;
+		PriorityQueue<Integer> min=new PriorityQueue<>();
+		PriorityQueue<Integer> max=new PriorityQueue<>(Collections.reverseOrder());
+		System.out.print(arr[0]+" ");
+		max.offer(arr[0]);
+		for(int i=1;i<n;i++){
+			if(arr[i]<=max.peek()) max.offer(arr[i]);
+			else min.offer(arr[i]);
+			if(max.size()>min.size()+1) min.offer(max.poll());
+			else if(min.size()>max.size()) max.offer(min.poll());
+			if(max.size()==min.size()) System.out.print((int)(max.peek()+min.peek())/2+" ");
+			else System.out.print(max.peek()+" ");
+		}
+    
+    }
+
+
+}

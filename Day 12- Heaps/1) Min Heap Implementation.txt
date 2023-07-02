@@ -1,0 +1,66 @@
+import java.util.* ;
+import java.io.*; 
+
+class Heap{
+    int[] arr;
+    int size;
+    Heap(int n){
+        arr=new int[n];
+        arr[0]=-1;
+        size=0;
+    }
+    void swap(int i, int j){
+        int tmp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=tmp;
+    }
+    void add(int e){
+        size++;
+        int i=size;
+        arr[i]=e;
+        while(i>1){
+            int parent=i/2;
+            if(arr[parent]>arr[i]){
+                swap(i, parent);
+                i=parent;
+            }else return;
+        }
+    }
+    int poll(){
+        if(size==0) return -1;
+        int ans=arr[1];
+        arr[1]=arr[size];
+        size--;
+        int i=1;
+        while(i<size){
+            int left=2*i;
+            int right=2*i+1;
+            int smaller=i;
+            if(left<=size && arr[smaller]>arr[left]) smaller=left;
+            if(right<=size && arr[smaller]>arr[right]) smaller=right;
+            if(i==smaller) break;
+            swap(i, smaller);
+            i=smaller;
+        }
+        return ans;
+    }
+}
+
+public class Solution {
+
+    // minHeap function which take size of Queries and Queries as Input.
+// Returns an array out outputs depending on the query.
+    static int[] minHeap(int n, int[][] q) {
+        // Write your code here.
+        Heap hp=new Heap(n+1);
+        ArrayList<Integer> li=new ArrayList<>();
+        for(int[] a:q){
+            if(a[0]==0) hp.add(a[1]);
+            else li.add(hp.poll());
+        }
+        int[] ans=new int[li.size()];
+        for(int i=0;i<li.size();i++) ans[i]=li.get(i);
+        return ans;
+
+    }
+}

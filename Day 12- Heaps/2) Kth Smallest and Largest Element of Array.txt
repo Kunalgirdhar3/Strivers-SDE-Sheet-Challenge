@@ -1,0 +1,18 @@
+import java.util.*;
+
+
+public class Solution {
+	public static ArrayList<Integer> kthSmallLarge(ArrayList<Integer> arr, int n, int k) {
+		//Write your code here
+		PriorityQueue<Integer> pq=new PriorityQueue<>();
+		for(int a:arr) pq.add(a);
+		for(int i=0;i<k-1;i++) pq.poll();
+		ArrayList<Integer> ans=new ArrayList<>();
+		ans.add(pq.poll());
+		pq=new PriorityQueue<>(Collections.reverseOrder());
+		for(int a:arr) pq.add(a);
+		for(int i=0;i<k-1;i++) pq.poll();
+		ans.add(pq.poll());
+		return ans;
+	}
+}
